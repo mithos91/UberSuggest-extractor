@@ -183,6 +183,7 @@ def sorterone(filename,whichlinesort):
 
                 #definisci il nome del file temp giusto per comodita'
                 tempname = folderoutput + "/temp.csv"
+                
                 if os.path.exists(tempname):
                         os.remove(tempname)
                 
