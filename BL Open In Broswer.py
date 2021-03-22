@@ -1,4 +1,3 @@
-import webbrowser
 import csv
 import os
 import re
@@ -6,6 +5,8 @@ import sys
 import operator
 import keyboard
 import time
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
 
 
 #define folder output
@@ -13,7 +14,9 @@ CSVToUsePath = "_output\extracted_bl.csv"
 CSVOutputfile = "_output\_Link_Analysis.csv"
 CSVTempOutputFile = "_output/tempAnalysis.csv"
 
-
+#create Selenium Chrome Instance
+websurfer = webdriver.Chrome(r"C:\Users\anton\Desktop\excel python test\chromedriver.exe")
+#keyboard.send('alt+tab')
               
 #--------------------------------------|#--------------------------------------|
 #FUNCTION 01: open CSV transfer in new CSV then add column
@@ -38,6 +41,7 @@ def apriecopiadati():
                                         
         newfile01.closed
         newfile02.closed
+        opencsvandscrap()
 
 #--------------------------------------|#--------------------------------------|
 #FUNCTION 02: open new CSV then scrap by line
@@ -60,16 +64,20 @@ def opencsvandscrap():
                                                 print(line)
                                         elif(ForceStop == False):
                                                 print(line)
-                                                print("")
-                                                print("StopAll per bloccare il processo")
-                                                print("")
+                                                print("----COMANDI----:")
+                                                print(" - StopAll - per bloccare il processo")
+                                                print(" - # - per ignorare l'elemento e non copiarlo")
                                                 OpenURL(line[0])
                                                 x = input("scrivi un commento: ")
-                                                os.system("taskkill /im chrome.exe /f")
                                                 if(x == "StopAll"):
+                                                        temp_writer.writerow(line)
                                                         newfile01.closed
                                                         newfile02.closed
+                                                        os.system("taskkill /im chrome.exe /f")
+                                                        os.system("taskkill /im chromedriver.exe /f")
                                                         ForceStop = True
+                                                elif(x == "#"):
+                                                        print("Rimosso!")
                                                 else:
                                                         print(line[0])
                                                         line.append(str(x))
@@ -100,11 +108,8 @@ def OverwriteThenClose():
 #FUNCTION 04: Open Internet Page
 #--------------------------------------|#--------------------------------------|                
 def OpenURL(url):
-        url = "Https:" + url
-        webbrowser.open(url, new=0, autoraise=True)
-        time.sleep(1)
-        keyboard.send('alt+tab')
-        
+        url = "Https:" + url        
+        websurfer.get(url)        
 
 
 #--------------------------------------|#--------------------------------------|
@@ -116,80 +121,15 @@ if not os.path.exists(CSVOutputfile):
         with open(CSVOutputfile,"w",encoding="utf-8", newline='') as newfile:
                 newfile.closed
 else:
-        print("Il file esiste: vuoi sovrascriverlo? Tutti i dati andranno persi! y/n ")
-        filebool = True
-        while filebool==True:
-                try:
-                        if(keyboard.is_pressed("y")):
-                                with open(CSVOutputfile,"w",encoding="utf-8", newline='') as newfile:
+        x = input("Il file esiste: vuoi sovrascriverlo? Tutti i dati andranno persi! y/n ")
+        if(x == "y"):
+                with open(CSVOutputfile,"w",encoding="utf-8", newline='') as newfile:
                                         newfile.closed
                                         time.sleep(1)
                                         print("Link Analysis sovrascritto")
                                         apriecopiadati()
-                                        filebool = False
-                        elif(keyboard.is_pressed("n")):
-                                print("Ok, processo fermato")
-                                break
-                        else:
-                                pass
-                except:
-                        print("Hai premuto un tasto sbagliato")
-                        time.sleep(1)
-                        break
-
-
-opencsvandscrap()
-
-
-
-
-
-
-"""
-
-#open and locally hold data from csv
-
-
-with open(CSVToUsePath,'r', encoding='utf-8-sig') as csvf:
-        csvReader = csv.DictReader(csvf)
-        sortlist = sorted(csvReader,key=operator.itemgetter("Domain Auth"), reverse = True)
-        i= 0
-csvf.closed
-
-with open(CSVToUsePath,'w', encoding='utf-8-sig',newline='') as csvf:
-        fieldnames = ['Source Link','Source Page','Target URL','Anchor Text','Domain Auth','Page Auth']
-        csvWriter = csv.DictWriter(csvf, fieldnames=fieldnames)
-        csvWriter.writeheader()
-        for line in sortlist:
-                csvWriter.writerow(line)
-csvf.closed
-print('end')
-
-
-
-"""
-
-
-
-
-
-
-
-
-
-
-
-
-"""
-
-
-url = 'http://docs.python.org/'
-
-# Windows path
-chrome_path = 'C:\Program Files\Google\Chrome\Application\chrome.exe %s'
-
-
-webbrowser.get().open(url)
-
-
-"""
+        elif(x == "n"):
+                print("Ok apro il file e non sovrascrivo")
+                opencsvandscrap()
+        else:
+                print("Hai premuto il tasto sbagliato")
