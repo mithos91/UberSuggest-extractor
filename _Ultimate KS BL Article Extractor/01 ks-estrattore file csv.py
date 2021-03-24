@@ -176,8 +176,6 @@ if(os.path.exists(dumpfolder)):
 else:
         os.mkdir(dumpfolder)
         print("cartella dump non presente. Creazione in corso")
-        input("inserisci dati csv dentro la cartella e fai ripartire il programma. Premi un tasto per chiudere")
-        sys.exit()
 if(os.path.exists(outputfolder)):
         pass
 else:
@@ -192,7 +190,11 @@ for f in os.scandir(dumpfolder):
                 print("file trovato - " + f.name)
                 counter += 1
         else:
-                pass
+                print("Non ci sono file nella cartella _dumphere")
+                print("")
+                print("")
+                input("Chiusura forzata. Inserisci i files e riprova")
+                sys.exit()
 
 #scan all csv in dumpfolder
 if(counter >0):
@@ -206,7 +208,7 @@ if(counter >0):
                         pass
 else:
         print("Non ho trovato file da analizzare.")
-        print("Aggiungi file csv alla cartella _dumphere e fai ripartire il programma")
+        print("Aggiungi file csv nella cartella _dumphere e fai ripartire il programma")
         input("premi enter per chiudere")
         sys.exit()
 
