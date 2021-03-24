@@ -21,3 +21,10 @@ Each folder has to have 3 files and each one has to be partially named as (wild 
 
 Once clicked, write y then enter and the program will do its magic.
 
+/--UPDATE 24.03.2021 --/
+Added _Template Articles. How to use:
+- Start 01[xxx].py
+- Add top pages keywords / top pages backlinlks .csvs in dump folder
+- Start 01[xxx].py again and follow instructions
+- Start 02[xxx].py then paste your text to check if clipboard text has any scrapped ks. It will report missing ks in a text file
+- Start 03[xxx].py use it if you want to analyze sites by csv list.
