@@ -133,7 +133,21 @@ def OpenURL(url):
         url = "Https:" + url        
         websurfer.get(url)        
 
-
+def overwritefile():
+        x = input("Il file esiste: vuoi sovrascriverlo? Tutti i dati andranno persi! y/n ")
+        if(x == "y"):
+                with open(CSVOutputfile,"w",encoding="utf-8-sig", newline='') as newfile:
+                        newfile.closed
+                        time.sleep(1)
+                        print("Link Analysis sovrascritto")
+                        apriecopiadati()
+        elif(x == "n"):
+                print("Ok apro il file e non sovrascrivo")
+                opencsvandscrap()
+        else:
+                print("Hai premuto il tasto sbagliato. Ritenta n o y")
+                print("")
+                overwritefile()
 #--------------------------------------|#--------------------------------------|
 #CODE 01: create file if doesn't exist or overwrite or stop process key listener
 #--------------------------------------|#--------------------------------------|        
@@ -154,16 +168,6 @@ else:
         time.sleep(2)
         bar.finish
         os.system("cls")
-        x = input("Il file esiste: vuoi sovrascriverlo? Tutti i dati andranno persi! y/n ")
-        if(x == "y"):
-                with open(CSVOutputfile,"w",encoding="utf-8-sig", newline='') as newfile:
-                                        newfile.closed
-                                        time.sleep(1)
-                                        print("Link Analysis sovrascritto")
-                                        apriecopiadati()
-        elif(x == "n"):
-                print("Ok apro il file e non sovrascrivo")
-                opencsvandscrap()
-        else:
-                print("Hai premuto il tasto sbagliato")
+        overwritefile()
+
 
