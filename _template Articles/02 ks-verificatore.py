@@ -83,7 +83,7 @@ def openfile():
 ####
                         
 for f in os.scandir(outputfolder):
-        if (f.name == " ks_output.csv"):
+        if (f.name == "ks_output.csv"):
                 ApriCSVinDict(f)
 
 openfile()
