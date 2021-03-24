@@ -104,7 +104,7 @@ def printcsvks():
                 temp_reader = csv.reader(csvf)
                 next(temp_reader, None)
                 sort_reader = sorted(temp_reader, key = lambda x: int(x[1]),reverse = True)
-                with open(outputfolder + "/ ks_output.csv",'w',encoding='utf-8-sig',newline='') as csvf2:
+                with open(outputfolder + "/ks_output.csv",'w',encoding='utf-8-sig',newline='') as csvf2:
                         temp_writer = csv.writer(csvf2)
                         temp_writer.writerow(kslistoutput)
                         for line in sort_reader:
